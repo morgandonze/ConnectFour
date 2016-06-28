@@ -13,8 +13,10 @@ defmodule ConnectFour do
     case get_move(state[:turn]) do
       {:ok, move} ->
         # do stuff
+        new_board = ConnectFour.update_board(state[:board], move, player)
       {:error} ->
         # do error stuff
+        IO.puts("Invalid move")
     end
     
   end
