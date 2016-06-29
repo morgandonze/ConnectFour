@@ -13,13 +13,18 @@ defmodule ConnectFour do
     case get_move(state[:turn]) do
       {:ok, move} ->
         # do stuff
-        new_board = ConnectFour.Board.update_board(state[:board], move, state[:turn])
-        
-        new_state(state, new_board)
-        |> do_turn
+        case ConnectFour.Board.update_board(state[:board], move, state[:turn]) do
+          {:error} ->
+            IO.puts("Invalid move")
+            do_turn(state) # redundant; can we use `with`?
+          new_board ->
+            new_state(state, new_board)
+            |> do_turn
+        end
       {:error} ->
         # do error stuff
         IO.puts("Invalid move")
+        do_turn(state)
     end
   end
   

@@ -1,11 +1,11 @@
 defmodule ConnectFour.Board do
   def new do
-    { {0, 0, 0, 0, 0, 0},
+     {{0, 0, 0, 0, 0, 0},
       {0, 0, 0, 0, 0, 0},
       {0, 0, 0, 0, 0, 0},
       {0, 0, 0, 0, 0, 0},
       {0, 0, 0, 0, 0, 0},
-      {0, 0, 0, 0, 0, 0}, }
+      {0, 0, 0, 0, 0, 0}}
   end
   
   def update_board(board, move, player) do
