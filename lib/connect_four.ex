@@ -42,7 +42,7 @@ defmodule ConnectFour do
   end
   
   def validate_move(move) do
-    if String.match?(move, ~r/\d/) do
+    if String.match?(move, ~r/[0-5]/) do
       {:ok, String.to_integer(move)}    
     else
       {:error}

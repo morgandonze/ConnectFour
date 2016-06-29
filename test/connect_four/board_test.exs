@@ -60,16 +60,19 @@ defmodule ConnectFour.BoardTest do
              {0, 0, 0, 0, 0, 0},}
   end
   
-  # test "#find_top" do
-  #   col = {1, 1, 1, 0, 0, 0}
-  #   assert ConnectFour.Board.find_top(col) == {:ok, 3}
-  #   
-  #   col = {1, 1, 1, 1, 0, 0}
-  #   assert ConnectFour.Board.find_top(col) == {:ok, 4}
-  #   
-  #   col = {1, 1, 1, 1, 1, 1}
-  #   assert ConnectFour.Board.find_top(col) == {:error}
-  # end
+  test "#find_top" do
+    col = {1, 1, 1, 0, 0, 0}
+    assert ConnectFour.Board.find_top(col) == {:ok, 3}
+    
+    col = {1, 1, 1, 1, 0, 0}
+    assert ConnectFour.Board.find_top(col) == {:ok, 4}
+    
+    col = {1, 1, 1, 1, 1, 0}
+    assert ConnectFour.Board.find_top(col) == {:ok, 5}
+    
+    col = {1, 1, 1, 1, 1, 1}
+    assert ConnectFour.Board.find_top(col) == {:error}
+  end
   # 
   # test "#replace_column" do
   #   board = ConnectFour.Board.new

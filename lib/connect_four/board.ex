@@ -38,12 +38,12 @@ defmodule ConnectFour.Board do
     |> Tuple.insert_at(move, col)
   end
   
-  defp find_top(col, n\\0) do
+  def find_top(col, n\\0) do
     col_list = Tuple.to_list(col)
     [h|t] = col_list
     
     cond do
-      !Enum.any?(t) ->
+      !Enum.any?(t) && h != 0 ->
         {:error}
       h == 0 ->
         {:ok, n}
