@@ -1,35 +1,50 @@
 defmodule ConnectFour.Board do
   def new do
-    [
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-    ]
+    { {0, 0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0}, }
   end
   
   def update_board(board, move, player) do
-    col = old_board[move]
+    col = elem(board, move)
     case find_top(col) do
-      {:ok, n} ->
+      {:ok, top} ->
         # make move
-        {:ok, List.replace_at(board, n, player)}
+        {:ok, insert_piece(board, move, top, player)}
       _ ->
         {:error}
     end
     
   end
   
-  defp find_top(col, n=0) do
-    [h|t] = col
+  def insert_piece(board, move, top, player) do
+    col = elem(board, move)
+    update_column(col, top, player)
+    |> replace_column(board, move)
+  end
+  
+  def update_column(col, top, player) do
+    Tuple.delete_at(col, top)
+    |> Tuple.insert_at(top, player)
+  end
+  
+  def replace_column(col, board, move) do
+    Tuple.delete_at(board, move)
+    |> Tuple.insert_at(move, col)
+  end
+  
+  defp find_top(col, n\\0) do
+    col_list = Tuple.to_list(col)
+    [h|t] = col_list
     cond do
-      h <> 0 ->
+      h != 0 ->
         {:ok, n}
-      t.any? ->
-        {:ok, find_top(t, n+1)}
-      _ ->
+      Enum.any?(t) ->
+        {:ok, List.to_tuple(t) |> find_top(n+1)}
+      true ->
         {:error}
     end
   end

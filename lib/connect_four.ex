@@ -13,12 +13,21 @@ defmodule ConnectFour do
     case get_move(state[:turn]) do
       {:ok, move} ->
         # do stuff
-        new_board = ConnectFour.update_board(state[:board], move, player)
+        new_board = ConnectFour.Board.update_board(state[:board], move, state[:turn])
+        
+        new_state(state, new_board)
+        |> do_turn
       {:error} ->
         # do error stuff
         IO.puts("Invalid move")
     end
-    
+  end
+  
+  defp new_state(old_state, new_board) do
+    %{
+      turn: -1 * old_state[:turn],
+      board: new_board
+    }
   end
   
   def get_move(turn) do
@@ -29,7 +38,7 @@ defmodule ConnectFour do
   
   def validate_move(move) do
     if String.match?(move, ~r/\d/) do
-      {:ok, move}    
+      {:ok, String.to_integer(move)}    
     else
       {:error}
     end
