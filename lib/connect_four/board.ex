@@ -9,9 +9,10 @@ defmodule ConnectFour.Board do
   end
   
   def update_board(board, move, player) do
-    col = elem(board, move)
     insert_piece(board, move, player)
   end
+  
+  # private methods
   
   defp insert_piece(board, move, player) do
     col = elem(board, move)
