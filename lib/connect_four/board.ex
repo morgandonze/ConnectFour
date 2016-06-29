@@ -9,23 +9,26 @@ defmodule ConnectFour.Board do
   end
   
   def update_board(board, move, player) do
-    insert_piece(board, move, player)
-  end
-  
-  # private methods
-  
-  defp insert_piece(board, move, player) do
     col = elem(board, move)
     
     case find_top(col) do
       {:ok, top} ->
         # make move
-        update_column(col, top, player)
-        |> replace_column(board, move)
+        case insert_piece(board, move, top, player) do
+          board ->
+            {:ok, board}
+        end
       _ ->
         {:error}
     end
-    
+  end
+  
+  # private methods
+  
+  defp insert_piece(board, move, top, player) do
+    col = elem(board, move)
+    update_column(col, top, player)
+    |> replace_column(board, move)
   end
   
   defp update_column(col, top, player) do

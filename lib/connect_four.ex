@@ -17,7 +17,7 @@ defmodule ConnectFour do
           {:error} ->
             IO.puts("Invalid move")
             do_turn(state) # redundant; can we use `with`?
-          new_board ->
+          {:ok, new_board} ->
             new_state(state, new_board)
             |> do_turn
         end
@@ -26,6 +26,12 @@ defmodule ConnectFour do
         IO.puts("Invalid move")
         do_turn(state)
     end
+    
+    # with \
+    #   {:ok, move} <- get_move(state[:turn]),
+    #   {:ok, new_board} <- ConnectFour.Board.update_board(state[:board], move, state[:turn]),
+    # do:
+    #   nil  
   end
   
   defp new_state(old_state, new_board) do
