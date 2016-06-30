@@ -2,6 +2,7 @@ defmodule ConnectFour.IO do
   def display_board(board) do
     [h|t] = prepare_board(board)
     display_board(h, t)
+    IO.puts "      1 2 3 4 5 6"
   end
   
   def prepare_board(board) do
@@ -26,22 +27,22 @@ defmodule ConnectFour.IO do
   end
   
   def display_row(accumulator, []) do
-    IO.puts accumulator
+    IO.puts "      #{accumulator}"
   end
   
   def display_row(accumulator, remaining) do
     [first_cell | other_cells] = remaining
-    display_row(accumulator <> translate_player(first_cell), other_cells)
+    display_row("#{translate_player(first_cell)} #{accumulator}", other_cells)
   end
   
   def translate_player(turn) do
     case turn do
       1 ->
-        "O "
+        "O"
       -1 ->
-        "@ "
+        "@"
       _ ->
-        ". "  
+        "."  
     end
   end
   
@@ -54,7 +55,7 @@ defmodule ConnectFour.IO do
   def validate_move(move) do
     cond do
       String.match?(move, ~r/[0-5]/) ->
-        {:ok, String.to_integer(move)}    
+        {:ok, String.to_integer(move) - 1}    
       String.match?(move, ~r/q(uit)?/) ->
         {:quit}
       true ->
