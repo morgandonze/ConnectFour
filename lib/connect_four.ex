@@ -20,6 +20,8 @@ defmodule ConnectFour do
       {:error} ->
         IO.puts "error!"
         do_turn(state)
+      {:quit} ->
+        IO.puts "bye"
       new_state ->
         do_turn(new_state)
     end
