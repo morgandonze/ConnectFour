@@ -23,7 +23,12 @@ defmodule ConnectFour do
       {:quit} ->
         IO.puts "bye"
       new_state ->
-        do_turn(new_state)
+        if ConnectFour.WinChecker.check(new_state[:board]) do
+          ConnectFour.IO.display_board(new_state[:board])
+          IO.puts "Player #{ConnectFour.IO.translate_player(state[:turn])} wins!"
+        else  
+          do_turn(new_state)
+        end
     end
   end
   

@@ -1,4 +1,10 @@
 defmodule ConnectFour.IO do
+  def get_move(turn) do
+    IO.gets(:stdio, "[#{translate_player(turn)}] Enter move: ")
+    |> String.trim
+    |> validate_move
+  end
+  
   def display_board(board) do
     [h|t] = prepare_board(board)
     display_board(h, t)
@@ -46,15 +52,9 @@ defmodule ConnectFour.IO do
     end
   end
   
-  def get_move(turn) do
-    IO.gets(:stdio, "[#{translate_player(turn)}] Enter move: ")
-    |> String.trim
-    |> validate_move
-  end
-  
   def validate_move(move) do
     cond do
-      String.match?(move, ~r/[0-5]/) ->
+      String.match?(move, ~r/[1-6]/) ->
         {:ok, String.to_integer(move) - 1}    
       String.match?(move, ~r/q(uit)?/) ->
         {:quit}
