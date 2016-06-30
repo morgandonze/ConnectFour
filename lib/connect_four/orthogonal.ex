@@ -1,16 +1,17 @@
 defmodule ConnectFour.Orthogonal do
   def check_both(tuple_board) do
     board = Listify.listify(tuple_board)
-    check_vertical(board) #|| check_vertical(board)
+    check_vertical(board) || check_horizontal(board)
   end
   
   def check_vertical(board) do
     check(board, [])
   end
   
-  # def check_horizontal(board) do
-  #   false
-  # end
+  def check_horizontal(board) do
+    Transpose.transpose(board)
+    |> check([])
+  end
   
   def check([], row) do
     check_row(row)
