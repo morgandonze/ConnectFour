@@ -1,10 +1,11 @@
 defmodule ConnectFour do
-  def play do
+  def start(_type, _args) do
     state = %{
       turn: 1,
       board: ConnectFour.Board.new,
     }
     do_turn(state)
+    Supervisor.start_link [], strategy: :one_for_one # via Jose Valim - http://stackoverflow.com/questions/30687781/how-to-run-elixir-application#comment49441617_30688873
   end
   
   def do_turn(state) do

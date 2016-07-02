@@ -14,7 +14,9 @@ defmodule ConnectFour.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [
+      mod: {ConnectFour, []},
+      applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:
