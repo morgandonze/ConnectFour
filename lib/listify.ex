@@ -1,4 +1,4 @@
-defmodule ConnectFour.Listify do
+defmodule Listify do
   def listify(matrix) do
     Tuple.to_list(matrix)
     |> listify_row([])
