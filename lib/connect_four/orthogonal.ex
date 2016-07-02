@@ -1,6 +1,5 @@
 defmodule ConnectFour.Orthogonal do
-  def check_both(tuple_board) do
-    board = Listify.listify(tuple_board)
+  def check_both(board) do
     check_vertical(board) || check_horizontal(board)
   end
   

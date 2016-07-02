@@ -1,5 +1,5 @@
-defmodule ConnectFour.Diagonal3 do
-  def add_columns(matrix) do
+defmodule ConnectFour.Diagonalize do
+  def diagonalize(matrix) do
     [h | t] = Transpose.transpose(matrix)
     acc_1 = Enum.reverse(h)
     acc = Enum.map(acc_1, fn(r) -> [r] end)
