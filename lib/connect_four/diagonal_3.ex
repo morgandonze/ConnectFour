@@ -1,22 +1,21 @@
 defmodule ConnectFour.Diagonal3 do
-  def add_columns(rows) do
-    [next_row | rem_rows] = rows
-    add_columns(next_row, rem_rows, [])
+  def add_columns(matrix) do
+    [h | t] = Transpose.transpose(matrix)
+    acc_1 = Enum.reverse(h)
+    acc = Enum.map(acc_1, fn(r) -> [r] end)
+    [next_column | rem_columns] = t
+    
+    add_columns(next_column, rem_columns, acc)
   end
   
-  def add_columns(row, [], acc) do
-    add_items(List.flatten(row), acc)
+  def add_columns(column, [], acc) do
+    add_items(List.flatten(column), acc)
   end
   
-  def add_columns(row, rem_rows, []) do
-    [next_row | rem_rows] = rem_rows
-    add_columns(next_row, rem_rows, Enum.reverse(row))
-  end
-  
-  def add_columns(row, rem_rows, acc) do
-    [next_row | next_rem_rows] = rem_rows
-    new_acc = add_items(List.flatten(row), acc)
-    add_columns(next_row, next_rem_rows, new_acc)
+  def add_columns(column, rem_columns, acc) do
+    [next_column | next_rem_columns] = rem_columns
+    new_acc = add_items(List.flatten(column), acc)
+    add_columns(next_column, next_rem_columns, new_acc)
   end
   
   @doc """
@@ -40,6 +39,8 @@ defmodule ConnectFour.Diagonal3 do
     
     add_items(item, rem_items, [], orig_matrix, range)
   end
+  
+  
   
   def add_items(item, rem_items, [], rem_matrix, range) do
     [acc_item | next_rem_matrix] = rem_matrix
