@@ -1,31 +1,57 @@
 defmodule ConnectFour.Diagonal3 do
-  def add_item(item, [], acc, [], _) do
-    pos = Enum.count(acc)
-    List.insert_at(acc, pos, [item])
-  end  
+  @doc """
+  Given a column from an original matrix, place each item from
+  that column into the target matrix, in which each row contains
+  the items from the diagonals of the original matrix.
   
-  def add_item(item, item_rem, acc, [], _) do
-    [ih | it] = item_rem
-    pos = Enum.count(acc)
-    add_item(ih, it, List.insert_at(acc, pos, [item]), [], 0)
-  end  
+  ## Parameters
   
-  def add_item(item, item_rem, acc, matrix_rem, range) do
-    [mh | mt] = matrix_rem
+    item - Integer; the next item to add. Taken from the end of rem_items
+    items - Array; column from original matrix to insert, must not be empty
+    rem_items - Array; the remaining items from a column of the original matrix
+    acc - Array; target matrix in construction
+    rem_matrix - Array; target matrix before calling add_items
+    range - Array; [1, n - 1] where n is the size of the columns of the original
+      matrix
+  """
+  def add_items(items, orig_matrix) do
+    [item | rem_items] = Enum.reverse(items)
+    range = [1, Enum.count(items) - 1]
+    
+    add_items(item, rem_items, [], orig_matrix, range)
+  end
+  
+  def add_items(item, rem_items, [], rem_matrix, range) do
+    [acc_item | next_rem_matrix] = rem_matrix
+    acc = [acc_item]
+    
+    add_items(item, rem_items, acc, next_rem_matrix, range)
+  end
+  
+  def add_items(item, [], acc, _, _) do
+    insert_at_end(acc, [item])
+  end
+  
+  def add_items(item, rem_items, acc, rem_matrix, range) do
+    [next_rem_matrix_row | next_rem_matrix] = rem_matrix
     cond do
-      Enum.count(matrix_rem) >= Enum.min(range) &&
-      Enum.count(matrix_rem) <= Enum.max(range) ->
-        [ih | it] = Enum.reverse(item_rem)
-        pos = Enum.count(acc)
-        mhpos = Enum.count(mh)
-        new_row = List.insert_at(mh, mhpos, item) 
-        new_acc = List.insert_at(acc, pos, new_row)
+      Enum.count(rem_matrix) >= Enum.min(range) &&
+      Enum.count(rem_matrix) <= Enum.max(range) ->
+        [next_item | next_rem_items] = rem_items
+        new_row = insert_at_end(next_rem_matrix_row, item)
+        new_acc = insert_at_end(acc, new_row)
         
-        add_item(ih, it, new_acc, mt, range)  
+        add_items(next_item, next_rem_items, new_acc, next_rem_matrix, range)
       true ->
-        pos = Enum.count(acc)
-        new_acc = List.insert_at(acc, pos, mh)
-        add_item(item, item_rem, new_acc, mt, range)
+        new_acc = insert_at_end(acc, next_rem_matrix_row)
+        
+        add_items(item, rem_items, new_acc, next_rem_matrix, range)
     end
-  end  
+  end
+  
+  def insert_at_end(list, item) do
+    Enum.reverse(list)
+    |> Enum.into([item])
+    |> Enum.reverse
+  end
 end
