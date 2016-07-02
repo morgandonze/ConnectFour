@@ -1,4 +1,4 @@
-defmodule ConnectFour.Diagonalize do
+defmodule Diagonalize do
   def diagonalize(matrix) do
     [h | t] = Transpose.transpose(matrix)
     acc_1 = Enum.reverse(h)

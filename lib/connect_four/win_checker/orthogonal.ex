@@ -1,4 +1,4 @@
-defmodule ConnectFour.Orthogonal do
+defmodule ConnectFour.WinChecker.Orthogonal do
   def check_both(board) do
     check_vertical(board) || check_horizontal(board)
   end
