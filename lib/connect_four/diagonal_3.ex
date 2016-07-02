@@ -1,4 +1,24 @@
 defmodule ConnectFour.Diagonal3 do
+  def add_columns(rows) do
+    [next_row | rem_rows] = rows
+    add_columns(next_row, rem_rows, [])
+  end
+  
+  def add_columns(row, [], acc) do
+    add_items(List.flatten(row), acc)
+  end
+  
+  def add_columns(row, rem_rows, []) do
+    [next_row | rem_rows] = rem_rows
+    add_columns(next_row, rem_rows, Enum.reverse(row))
+  end
+  
+  def add_columns(row, rem_rows, acc) do
+    [next_row | next_rem_rows] = rem_rows
+    new_acc = add_items(List.flatten(row), acc)
+    add_columns(next_row, next_rem_rows, new_acc)
+  end
+  
   @doc """
   Given a column from an original matrix, place each item from
   that column into the target matrix, in which each row contains
