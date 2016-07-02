@@ -28,7 +28,7 @@ defmodule ConnectFour do
           ConnectFour.IO.display_board(new_state[:board])
           IO.puts "Player #{ConnectFour.IO.translate_player(state[:turn])} wins!"
         else  
-          do_turn(new_state)
+          do_turn(new_state) # Tail recursion!
         end
     end
   end
