@@ -12,13 +12,13 @@ defmodule ConnectFour.WinChecker.Orthogonal do
     |> check([])
   end
   
-  def check([], row) do
-    check_row(row)
-  end
-  
   def check(remaining, []) do
     [next_row | other_rows] = remaining
     check(other_rows, next_row)
+  end
+  
+  def check([], row) do
+    check_row(row)
   end
   
   def check(remaining, row) do
